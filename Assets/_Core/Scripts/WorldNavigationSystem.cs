@@ -19,37 +19,110 @@ public class WorldNavigationSystem : MonoBehaviour
 	private int _chunkWidth = 14;
 
 	[SerializeField]
-	private Transform _chunkPrefab;
+	private Transform _startChunkPrefab = null;
+
+	[SerializeField]
+	private Transform _chunkPrefab = null;
 
 	#endregion
 
 	#region Variables
 
-	private int _chunkIndex = 1;
+	private bool _initialized = false;
+	private int _chunkIndex = 0;
+	private RaTween _loopTween = null;
+	private List<Transform> _chunks = new List<Transform>();
 
 	#endregion
 
-	protected void Awake()
-	{
-		// First Right Chunk
-		CreateChunk();
+	#region Lifecycle
 
+	protected void OnDestroy()
+	{
+		_loopTween?.Kill();
+		_loopTween = null;
+	}
+
+	#endregion
+
+	#region Public Methods
+
+	public void Initialize()
+	{
+		if(_initialized)
+		{
+			return;
+		}
+
+		// Mark Start Base Chunk As Created
+		ResetLoop();
+
+		// Stabalize Variables
 		_speed = Mathf.Max(1f, _speed);
 
-		_chunksContainer
-			.TweenMoveX(-_chunkWidth, _chunkWidth / _speed)
-			.SetEndIsDelta()
-			.SetDynamicSetupStep(RaTweenDynamicSetupStep.Start)
-			.SetInfiniteLooping()
-			.OnLoop((loopCount) => CreateChunk())
-			.OnSetup(() => CreateChunk());
+		// Completed
+		_initialized = true;
 	}
+
+	public void ResumeLoop()
+	{
+		if(_loopTween != null)
+		{
+			_loopTween.Resume();
+		}
+		else
+		{
+			_loopTween = _chunksContainer
+				.TweenMoveX(-_chunkWidth, _chunkWidth / _speed)
+				.SetLocalPosition()
+				.SetEndIsDelta()
+				.SetDynamicSetupStep(RaTweenDynamicSetupStep.Start)
+				.SetInfiniteLooping()
+				.OnSetup(()=> CreateChunk())
+				.OnLoop((loopCount) => CreateChunk());
+		}
+	}
+
+	public void PauseLoop()
+	{
+		_loopTween?.Pause();
+	}
+
+	public void ResetLoop()
+	{
+		for(int i = 0; i < _chunks.Count; i++)
+		{
+			Destroy(_chunks[i]);
+		}
+
+		_loopTween?.Kill();
+		_loopTween = null;
+
+		_chunksContainer.transform.localPosition = Vector3.zero;
+		_chunkIndex = 0;
+
+		// Create Start Chunk
+		CreateChunk();
+
+		// Create Right Chunk
+		CreateChunk();
+	}
+
+	#endregion
+
+	#region Private Methods
 
 	private void CreateChunk()
 	{
-		Transform chunk = Instantiate(_chunkPrefab, _chunksContainer);
+		Transform prefab = _chunkIndex == 0 ? _startChunkPrefab : _chunkPrefab;
+
+		Transform chunk = Instantiate(prefab, _chunksContainer);
 		chunk.localPosition = new Vector3(_chunkWidth * _chunkIndex, 0f, 0f);
 		chunk.name = chunk.name + "[" + _chunkIndex + "]";
 		_chunkIndex++;
+
+		_chunks.Add(chunk);
 	}
+
+	#endregion
 }
