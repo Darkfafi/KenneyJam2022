@@ -122,6 +122,13 @@ public class WorldNavigationSystem : MonoBehaviour
 		_chunkIndex++;
 
 		_chunks.Add(chunk);
+
+		if(_chunks.Count > 4)
+		{
+			Transform tail = _chunks[0];
+			_chunks.RemoveAt(0);
+			Destroy(tail.gameObject);
+		}
 	}
 
 	#endregion
