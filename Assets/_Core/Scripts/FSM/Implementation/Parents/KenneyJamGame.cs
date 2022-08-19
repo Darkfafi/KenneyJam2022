@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class KenneyJamGame : MonoBehaviour, IStatesParent
 {
 	#region Editor Variables
 
+	[Header("Gameplay")]
 	[SerializeField]
 	private WorldNavigationSystem _worldNavigationSystem = null;
 
@@ -14,6 +16,10 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 
 	[SerializeField]
 	private KenneyJamGameStateBase[] _states = null;
+
+	[Header("UI")]
+	[SerializeField]
+	private Text _distanceLabel = null;
 
 	#endregion
 
@@ -48,6 +54,11 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 	protected void Start()
 	{
 		_fsm.StartStateMachine();
+	}
+
+	protected void Update()
+	{
+		_distanceLabel.text = _worldNavigationSystem.DistanceTravelled.ToString("0") + "m";
 	}
 
 	#endregion

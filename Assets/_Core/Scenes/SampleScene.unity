@@ -641,6 +641,7 @@ MonoBehaviour:
   _states:
   - {fileID: 358112520}
   - {fileID: 1538335339}
+  _distanceLabel: {fileID: 326124278}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

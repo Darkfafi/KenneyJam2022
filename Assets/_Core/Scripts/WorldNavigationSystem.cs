@@ -32,6 +32,16 @@ public class WorldNavigationSystem : MonoBehaviour
 	private int _chunkIndex = 0;
 	private RaTween _loopTween = null;
 	private List<Transform> _chunks = new List<Transform>();
+	private float _duration;
+
+	#endregion
+
+	#region Properties
+
+	public float DistanceTravelled
+	{
+		get; private set;
+	}
 
 	#endregion
 
@@ -59,6 +69,7 @@ public class WorldNavigationSystem : MonoBehaviour
 
 		// Stabalize Variables
 		_speed = Mathf.Max(1f, _speed);
+		_duration = (_chunkWidth / _speed);
 
 		// Completed
 		_initialized = true;
@@ -73,12 +84,13 @@ public class WorldNavigationSystem : MonoBehaviour
 		else
 		{
 			_loopTween = _chunksContainer
-				.TweenMoveX(-_chunkWidth, _chunkWidth / _speed)
+				.TweenMoveX(-_chunkWidth, _duration)
 				.SetLocalPosition()
 				.SetEndIsDelta()
 				.SetDynamicSetupStep(RaTweenDynamicSetupStep.Start)
 				.SetInfiniteLooping()
 				.OnSetup(()=> CreateChunk())
+				.OnUpdate(() => { DistanceTravelled += Time.deltaTime * _duration;})
 				.OnLoop((loopCount) => CreateChunk());
 		}
 	}
@@ -100,6 +112,7 @@ public class WorldNavigationSystem : MonoBehaviour
 
 		_chunksContainer.transform.localPosition = Vector3.zero;
 		_chunkIndex = 0;
+		DistanceTravelled = 0f;
 
 		// Create Start Chunk
 		CreateChunk();
