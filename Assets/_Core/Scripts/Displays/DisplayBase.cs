@@ -17,7 +17,7 @@ public abstract class DisplayBase : MonoBehaviour
 		get; private set;
 	}
 
-	protected void Awake()
+	protected virtual void Awake()
 	{
 		_content.gameObject.SetActive(false);
 	}
