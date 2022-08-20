@@ -15,5 +15,6 @@ MonoBehaviour:
   _name: SP Flask
   _description: Regenerates a small amount of SP
   _icon: {fileID: 21300000, guid: 660f8c68b2a21ac428ee3cc15b97f764, type: 3}
-  _costs: 02000000
+  _costs: 0a000000
+  _maxStockAmount: 3
   _type: 0

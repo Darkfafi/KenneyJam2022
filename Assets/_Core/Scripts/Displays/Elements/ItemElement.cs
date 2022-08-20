@@ -49,7 +49,7 @@ public class ItemElement : MonoBehaviour
 	private void RefreshItem()
 	{
 		_icon.sprite = _config.Icon;
-		_label.text = $"{_game.Inventory.GetItemCount(_config)}x";
+		_label.text = $"{_game.Inventory.GetItemCount(_config)}/{_config.MaxStockAmount}";
 	}
 
 	private void OnInventoryChanged()
