@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff1b7196057d524fac837a9a4e1c7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weakness: {fileID: 11400000, guid: a141537ee85b21a4b8c965f47d174389, type: 2}
   _character: {fileID: 6558545944936594710}
   _speed: 4
   _staminaDrain: 10

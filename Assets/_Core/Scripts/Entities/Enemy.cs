@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IChunkEntity, IInteractable
 {
+	#region Editor Variables
+
+	[SerializeField]
+	private ItemConfig _weakness = null;
+
 	[SerializeField]
 	private Character _character = null;
 
@@ -16,27 +21,25 @@ public class Enemy : MonoBehaviour, IChunkEntity, IInteractable
 	[SerializeField]
 	private float _viewRadius = 3f;
 
+	#endregion
+
+	#region Variables
+
 	private WorldChunk _chunk = null;
 	private bool _isAlive = false;
 
-	public InteractableType InteractableType => _isAlive ? InteractableType.Attack : InteractableType.None;
+	#endregion
 
-	public void Init(WorldChunk chunk)
+	#region Properties
+
+	public InteractableType InteractableType
 	{
-		_chunk = chunk;
-		_character.SetState(Character.PlayerState.Idle);
-		_isAlive = true;
+		get; private set;
 	}
 
-	public void Kill()
-	{
-		if(_isAlive)
-		{
-			_isAlive = false;
-			_character.SetState(Character.PlayerState.Death);
-			_character.Collider2D.enabled = false;
-		}
-	}
+	#endregion
+
+	#region Lifecycle
 
 	protected void Update()
 	{
@@ -69,10 +72,34 @@ public class Enemy : MonoBehaviour, IChunkEntity, IInteractable
 		Gizmos.DrawWireSphere(transform.position, _viewRadius);
 	}
 
+	#endregion
+
+	#region Public Methods
+
+	public void Init(WorldChunk chunk)
+	{
+		_chunk = chunk;
+		_character.SetState(Character.PlayerState.Idle);
+		_isAlive = true;
+		RefreshInteractibility();
+	}
+
 	public void Deinit()
 	{
 		_chunk = null;
 		_isAlive = false;
+		RefreshInteractibility();
+	}
+
+	public void Kill()
+	{
+		if(_isAlive)
+		{
+			_isAlive = false;
+			_character.SetState(Character.PlayerState.Death);
+			_character.Collider2D.enabled = false;
+			RefreshInteractibility();
+		}
 	}
 
 	public void Interact()
@@ -84,4 +111,32 @@ public class Enemy : MonoBehaviour, IChunkEntity, IInteractable
 				break;
 		}
 	}
+
+	#endregion
+
+	#region Private Methods
+
+	private void RefreshInteractibility()
+	{
+		InteractableType = InteractableType.None;
+		
+		if(!_isAlive)
+		{
+			return;
+		}
+
+		if(_chunk == null)
+		{
+			return;
+		}
+
+		if(!_chunk.Game.Inventory.HasItem(_weakness))
+		{
+			return;
+		}
+
+		InteractableType = InteractableType.Attack;
+	}
+
+	#endregion
 }
