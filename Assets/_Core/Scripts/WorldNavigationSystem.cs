@@ -43,6 +43,8 @@ public class WorldNavigationSystem : MonoBehaviour
 		get; private set;
 	}
 
+	public bool IsRunning => _loopTween != null && _loopTween.IsPlaying;
+
 	#endregion
 
 	#region Lifecycle

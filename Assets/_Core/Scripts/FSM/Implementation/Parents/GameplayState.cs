@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using RaTweening;
 
 public class GameplayState : KenneyJamGameStateBase
 {
@@ -10,11 +11,11 @@ public class GameplayState : KenneyJamGameStateBase
 
 	protected void Update()
 	{
-		if(IsCurrentState)
+		if(IsCurrentState && StateParent.NavigationSystem.IsRunning)
 		{
-			StateParent.Player.Stamina.ApplyDelta(-Time.deltaTime);
+			StateParent.Stamina.ApplyDelta(-Time.deltaTime);
 
-			if(StateParent.Player.Stamina.IsEmpty)
+			if(StateParent.Stamina.IsEmpty)
 			{
 				StateParent.GoToNextPhase();
 			}

@@ -16,22 +16,11 @@ public class Player : MonoBehaviour
 
 	#endregion
 
-	#region Variables
-
-	private bool _isInitialized = false;
-
-	#endregion
-
 	#region Properties
 
 	public SpriteRenderer SpriteRenderer => _spriteRenderer;
 
 	public PlayerState State
-	{
-		get; private set;
-	}
-
-	public StatValue Stamina
 	{
 		get; private set;
 	}
@@ -49,18 +38,6 @@ public class Player : MonoBehaviour
 	#endregion
 
 	#region Public Methods
-
-	public void Initialize(int staminaStartValue)
-	{
-		if(_isInitialized)
-		{
-			return;
-		}
-
-		Stamina = new StatValue(staminaStartValue);
-
-		_isInitialized = true;
-	}
 
 	public void SetState(PlayerState state)
 	{

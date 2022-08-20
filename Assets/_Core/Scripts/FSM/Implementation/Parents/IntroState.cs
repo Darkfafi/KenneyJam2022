@@ -13,7 +13,7 @@ public class IntroState : KenneyJamGameStateBase
 	protected override void OnEnter()
 	{
 		// Refresh Stats
-		StateParent.Player.Stamina.Refresh();
+		StateParent.Stamina.Refresh();
 		StateParent.NavigationSystem.ResetLoop();
 
 		// Animation

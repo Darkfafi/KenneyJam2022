@@ -47,6 +47,17 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 		get; private set;
 	}
 
+	// Stats
+	public Inventory Inventory
+	{
+		get; private set;
+	}
+
+	public StatValue Stamina
+	{
+		get; private set;
+	}
+
 	#endregion
 
 	#region Lifecycle
@@ -54,10 +65,11 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 	protected void Awake()
 	{
 		_fsm = new FiniteStateMachine<KenneyJamGame>(this, _states, false);
-		
-		
+
+		Inventory = new Inventory();
+		Stamina = new StatValue(_startStamina);
+
 		_worldNavigationSystem.Initialize();
-		Player.Initialize(_startStamina);
 
 		PlayerStartPosition = Player.transform.position;
 	}
@@ -70,7 +82,7 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 	protected void Update()
 	{
 		_distanceLabel.text = _worldNavigationSystem.DistanceTravelled.ToString("0") + "m";
-		_staminaFillBar.transform.localScale = new Vector3(Player.Stamina.NormalizedValue, 1f, 1f);
+		_staminaFillBar.transform.localScale = new Vector3(Stamina.NormalizedValue, 1f, 1f);
 	}
 
 	#endregion
