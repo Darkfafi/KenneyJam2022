@@ -18,7 +18,7 @@ public class WorldChunk : MonoBehaviour
 
         Game = game;
 
-        foreach(IChunkChild child in GetComponentsInChildren<IChunkChild>())
+        foreach(IChunkEntity child in GetComponentsInChildren<IChunkEntity>())
         {
             child.Init(this);
         }
@@ -31,7 +31,7 @@ public class WorldChunk : MonoBehaviour
             return;
         }
 
-        foreach(IChunkChild child in GetComponentsInChildren<IChunkChild>())
+        foreach(IChunkEntity child in GetComponentsInChildren<IChunkEntity>())
         {
             child.Deinit();
         }

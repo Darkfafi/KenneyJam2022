@@ -1,4 +1,4 @@
-﻿public interface IChunkChild
+﻿public interface IChunkEntity
 {
     void Init(WorldChunk chunk);
     void Deinit();

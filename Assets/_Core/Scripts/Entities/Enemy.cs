@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RaTweening;
 
-public class Enemy : MonoBehaviour, IChunkChild
+public class Enemy : MonoBehaviour, IChunkEntity, IInteractable
 {
 	[SerializeField]
 	private Character _character = null;
@@ -20,6 +19,8 @@ public class Enemy : MonoBehaviour, IChunkChild
 	private WorldChunk _chunk = null;
 	private bool _isAlive = false;
 
+	public InteractableType InteractableType => _isAlive ? InteractableType.Attack : InteractableType.None;
+
 	public void Init(WorldChunk chunk)
 	{
 		_chunk = chunk;
@@ -34,8 +35,6 @@ public class Enemy : MonoBehaviour, IChunkChild
 			_isAlive = false;
 			_character.SetState(Character.PlayerState.Death);
 			_character.Collider2D.enabled = false;
-			//_character.SpriteRenderer.transform.TweenPunchScale(Vector2.one * 0.2f, 0.5f, elasticity: 0.2f);
-			//_character.SpriteRenderer.TweenColorA(0, 0.7f).SetDelay(0.1f);
 		}
 	}
 
@@ -74,5 +73,15 @@ public class Enemy : MonoBehaviour, IChunkChild
 	{
 		_chunk = null;
 		_isAlive = false;
+	}
+
+	public void Interact()
+	{
+		switch(InteractableType)
+		{
+			case InteractableType.Attack:
+				Kill();
+				break;
+		}
 	}
 }

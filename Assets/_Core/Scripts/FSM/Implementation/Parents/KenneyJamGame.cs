@@ -10,6 +10,8 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 	[Header("Game")]
 	[SerializeField]
 	private WorldNavigationSystem _worldNavigationSystem = null;
+	[SerializeField]
+	private WorldInteractor _worldInteractor = null;
 
 	[SerializeField]
 	private Character _player = null;
@@ -35,6 +37,7 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 	#region Properties
 
 	public WorldNavigationSystem NavigationSystem => _worldNavigationSystem;
+	public WorldInteractor WorldInteractor => _worldInteractor;
 
 	public Character Player => _player;
 
@@ -71,6 +74,7 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 		Stamina = new StatValue(0);
 
 		_worldNavigationSystem.Initialize(this);
+		_worldInteractor.Initialize(this);
 
 		PlayerStartPosition = Player.transform.position;
 	}
