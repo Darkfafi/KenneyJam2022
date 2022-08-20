@@ -19,10 +19,10 @@ public class WorldNavigationSystem : MonoBehaviour
 	private int _chunkWidth = 14;
 
 	[SerializeField]
-	private Transform _startChunkPrefab = null;
+	private WorldChunk _startChunkPrefab = null;
 
 	[SerializeField]
-	private Transform _chunkPrefab = null;
+	private WorldChunk _chunkPrefab = null;
 
 	#endregion
 
@@ -31,12 +31,17 @@ public class WorldNavigationSystem : MonoBehaviour
 	private bool _initialized = false;
 	private int _chunkIndex = 0;
 	private RaTween _loopTween = null;
-	private List<Transform> _chunks = new List<Transform>();
+	private List<WorldChunk> _chunks = new List<WorldChunk>();
 	private float _duration;
 
 	#endregion
 
 	#region Properties
+
+	public KenneyJamGame Game
+	{
+		get; private set;
+	}
 
 	public float DistanceTravelled
 	{
@@ -59,12 +64,14 @@ public class WorldNavigationSystem : MonoBehaviour
 
 	#region Public Methods
 
-	public void Initialize()
+	public void Initialize(KenneyJamGame game)
 	{
 		if(_initialized)
 		{
 			return;
 		}
+
+		Game = game;
 
 		// Mark Start Base Chunk As Created
 		ResetLoop();
@@ -92,7 +99,10 @@ public class WorldNavigationSystem : MonoBehaviour
 				.SetDynamicSetupStep(RaTweenDynamicSetupStep.Start)
 				.SetInfiniteLooping()
 				.OnSetup(()=> CreateChunk())
-				.OnUpdate(() => { DistanceTravelled += Time.deltaTime * _duration;})
+				.OnUpdate(() => 
+				{ 
+					DistanceTravelled += Time.deltaTime * _duration;
+				})
 				.OnLoop((loopCount) => CreateChunk());
 		}
 	}
@@ -106,7 +116,9 @@ public class WorldNavigationSystem : MonoBehaviour
 	{
 		for(int i = 0; i < _chunks.Count; i++)
 		{
-			Destroy(_chunks[i].gameObject);
+			WorldChunk chunk = _chunks[i];
+			chunk.Deinit();
+			Destroy(chunk.gameObject);
 		}
 
 		_chunks.Clear();
@@ -131,18 +143,21 @@ public class WorldNavigationSystem : MonoBehaviour
 
 	private void CreateChunk()
 	{
-		Transform prefab = _chunkIndex == 0 ? _startChunkPrefab : _chunkPrefab;
+		WorldChunk prefab = _chunkIndex == 0 ? _startChunkPrefab : _chunkPrefab;
 
-		Transform chunk = Instantiate(prefab, _chunksContainer);
-		chunk.localPosition = new Vector3(_chunkWidth * _chunkIndex, 0f, 0f);
+		WorldChunk chunk = Instantiate(prefab, _chunksContainer);
+		chunk.transform.localPosition = new Vector3(_chunkWidth * _chunkIndex, 0f, 0f);
 		chunk.name = chunk.name + "[" + _chunkIndex + "]";
 		_chunkIndex++;
 
 		_chunks.Add(chunk);
 
+		chunk.Init(Game);
+
 		if(_chunks.Count > 4)
 		{
-			Transform tail = _chunks[0];
+			WorldChunk tail = _chunks[0];
+			tail.Deinit();
 			_chunks.RemoveAt(0);
 			Destroy(tail.gameObject);
 		}

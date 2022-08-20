@@ -36,8 +36,8 @@ public class IntroState : KenneyJamGameStateBase
 				.SetDelay(0.5f)
 				.ToSequenceEntry(0.7f),
 			StateParent.Player.transform.TweenMove(StateParent.PlayerStartPosition, 0.8f)
-				.OnStart(()=>StateParent.Player.SetState( Player.PlayerState.Walking))
-				.OnComplete(() => StateParent.Player.SetState(Player.PlayerState.Idle))
+				.OnStart(()=>StateParent.Player.SetState( Character.PlayerState.Walking))
+				.OnComplete(() => StateParent.Player.SetState(Character.PlayerState.Idle))
 				.ToSequenceEntry(),
 			StateParent.Player.transform.TweenPunchPos(Vector3.up * 0.3f, 0.5f, vibrato: 3, elasticity: 0f)
 				.SetDelay(0.3f)
