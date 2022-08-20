@@ -6,16 +6,18 @@ public class GameplayState : KenneyJamGameStateBase
 {
 	private Coroutine _endRoutine = null;
 
-	protected override void OnEnter()
+	public override void Initialize(KenneyJamGame parent)
 	{
-		StateParent.NavigationSystem.ResumeLoop();
-		StateParent.Player.SetState(Character.PlayerState.Walking);
+		base.Initialize(parent);
+
+		parent.DisableBottomBar();
+		parent.DisableItemsBar();
 	}
 
 	protected void Update()
 	{
-		if(IsCurrentState && 
-			StateParent.NavigationSystem.IsRunning && 
+		if(IsCurrentState &&
+			StateParent.NavigationSystem.IsRunning &&
 			_endRoutine == null)
 		{
 			StateParent.Stamina.ApplyDelta(-Time.deltaTime);
@@ -25,6 +27,15 @@ public class GameplayState : KenneyJamGameStateBase
 				_endRoutine = StartCoroutine(DoEndRoutine());
 			}
 		}
+	}
+
+	protected override void OnEnter()
+	{
+		StateParent.NavigationSystem.ResumeLoop();
+		StateParent.Player.SetState(Character.PlayerState.Walking);
+
+		StateParent.EnableBottomBar();
+		StateParent.EnableItemsBar();
 	}
 
 	protected override void OnExit()
@@ -38,6 +49,9 @@ public class GameplayState : KenneyJamGameStateBase
 			StopCoroutine(_endRoutine);
 			_endRoutine = null;
 		}
+
+		StateParent.DisableBottomBar();
+		StateParent.DisableItemsBar();
 	}
 
 	private IEnumerator DoEndRoutine()

@@ -19,12 +19,12 @@ public class ItemConfig : ScriptableObject
 	private int _maxStockAmount = 3;
 
 	[SerializeField]
-	private ItemType _type = ItemType.Consumable;
+	private ItemType _type = ItemType.Item;
 
 	public string ItemName => _name;
 	public string Description => _description;
 	public Sprite Icon => _icon;
-	public ItemType SetType => _type;
+	public ItemType SpecifiedType => _type;
 	public int MaxStockAmount => _maxStockAmount;
 
 	public int GetCost(int currentStock)
@@ -35,7 +35,7 @@ public class ItemConfig : ScriptableObject
 
 	public enum ItemType
 	{
-		Consumable,
+		Item,
 		Upgrade
 	}
 }

@@ -46,11 +46,16 @@ public class Enemy : MonoBehaviour, IChunkEntity, IInteractable
 		if(_chunk != null && _isAlive)
 		{
 			Character player = _chunk.Game.Player;
-			if(Vector2.Distance(player.transform.position, transform.position) < _viewRadius)
+			float distance = Vector2.Distance(player.transform.position, transform.position);
+			if(distance < _viewRadius)
 			{
 				_character.SetState(Character.PlayerState.Walking);
 				Vector2 delta = player.transform.position - transform.position;
-				transform.Translate(delta.normalized * (Time.deltaTime * _speed));
+				Vector2 step = delta.normalized * (Time.deltaTime * _speed);
+				if(distance >= step.magnitude)
+				{
+					transform.Translate(step);
+				}
 			}
 		}
 	}

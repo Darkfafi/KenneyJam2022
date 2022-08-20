@@ -111,7 +111,7 @@ public class ShopDisplay : DisplayBase
 				_highlightedElement.RefreshItem();
 				_titleLabel.text = element.Config.ItemName;
 				_icon.sprite = element.Config.Icon;
-				_typeLabel.text = element.Config.SetType.ToString();
+				_typeLabel.text = element.Config.SpecifiedType.ToString();
 				_descriptionLabel.text = element.Config.Description;
 				_costLabel.text = $"Cost: {element.PriceLabel.text}";
 				_stockLabel.text = $"Stock: {element.StockLabel.text}";

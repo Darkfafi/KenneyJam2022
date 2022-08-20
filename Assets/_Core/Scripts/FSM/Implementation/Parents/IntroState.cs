@@ -20,6 +20,7 @@ public class IntroState : KenneyJamGameStateBase
 	protected override void OnEnter()
 	{
 		// Apply Stats
+		StateParent.RefreshItemsBar();
 		StateParent.Stamina.SetMaxValue(_staminaScaler.GetValue(StateParent.Inventory.GetItemCount(_staminaConfig)));
 
 		// Refresh Stats

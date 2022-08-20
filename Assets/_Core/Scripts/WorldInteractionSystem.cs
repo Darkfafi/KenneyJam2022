@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorldInteractor : MonoBehaviour
+public class WorldInteractionSystem : MonoBehaviour
 {
 	[SerializeField]
 	private CursorUtil _cursorUtil = null;
@@ -50,3 +50,5 @@ public class WorldInteractor : MonoBehaviour
 		}
 	}
 }
+
+

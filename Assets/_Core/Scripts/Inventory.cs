@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 public class Inventory
 {
@@ -15,7 +16,6 @@ public class Inventory
 	}
 
 	// XP
-
 	public void AddXP(int amount)
 	{
 		amount = Mathf.Max(0, amount);
@@ -42,6 +42,10 @@ public class Inventory
 	}
 
 	// Items
+	public ItemConfig[] GetItemList(Predicate<ItemConfig> predicate)
+	{
+		return _items.Keys.Where((x) => predicate(x)).ToArray();
+	}
 
 	public int GetItemCount(ItemConfig config)
 	{
