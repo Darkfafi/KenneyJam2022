@@ -34,7 +34,7 @@ public class FiniteStateMachine<TStatesParent> : IDisposable
 	{
 		if(!IsRunning && States.Length > 0)
 		{
-			SetState(States[0]);
+			SetState(0);
 		}
 	}
 
@@ -56,9 +56,14 @@ public class FiniteStateMachine<TStatesParent> : IDisposable
 		}
 		else
 		{
-			SetState(States[nextStateIndex]);
+			SetState(nextStateIndex);
 			return true;
 		}
+	}
+
+	public void SetState(int index)
+	{
+		SetState(States[index]);
 	}
 
 	public void SetState(IState<TStatesParent> state)

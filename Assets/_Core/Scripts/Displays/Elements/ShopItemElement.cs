@@ -71,7 +71,7 @@ public class ShopItemElement : MonoBehaviour
 		_onClickCallback?.Invoke(this);
 	}
 
-	private void RefreshItem()
+	public void RefreshItem()
 	{
 		_icon.sprite = _config.Icon;
 

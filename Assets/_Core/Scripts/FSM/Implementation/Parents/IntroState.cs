@@ -8,10 +8,20 @@ public class IntroState : KenneyJamGameStateBase
 	[SerializeField]
 	private Transform _startWalkPosition = null;
 
+	[Header("Configs")]
+	[SerializeField]
+	private ItemConfig _staminaConfig = null;
+
+	[SerializeField]
+	private ScalerConfig _staminaScaler = null;
+
 	#endregion
 
 	protected override void OnEnter()
 	{
+		// Apply Stats
+		StateParent.Stamina.SetMaxValue(_staminaScaler.GetValue(StateParent.Inventory.GetItemCount(_staminaConfig)));
+
 		// Refresh Stats
 		StateParent.Stamina.Refresh();
 		StateParent.NavigationSystem.ResetLoop();

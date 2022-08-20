@@ -34,6 +34,11 @@ public class ShopDisplay : DisplayBase
 	private ShopItemElement _highlightedElement = null;
 	private Action _onClosed = null;
 
+	private void OnValidate()
+	{
+		_shopItems = GetComponentsInChildren<ShopItemElement>(true);
+	}
+
 	public void Init(KenneyJamGame game, Action onClosed)
 	{
 		if(_game != null)
@@ -44,13 +49,14 @@ public class ShopDisplay : DisplayBase
 		_game = game;
 		_onClosed = onClosed;
 
-		_game.Inventory.InventoryChangedEvent += RefreshXP;
-		RefreshXP();
+		_game.Inventory.InventoryChangedEvent += RefreshShop;
+		RefreshShop();
 	}
 
-	private void RefreshXP()
+	private void RefreshShop()
 	{
 		_xpLabel.SetNumberValue(_game.Inventory.XP);
+		OnShopItemClicked(_highlightedElement);
 	}
 
 	public void BuyButtonPressed()
@@ -87,7 +93,7 @@ public class ShopDisplay : DisplayBase
 
 		Action callback = _onClosed;
 
-		_game.Inventory.InventoryChangedEvent -= RefreshXP;
+		_game.Inventory.InventoryChangedEvent -= RefreshShop;
 		_game = null;
 		_onClosed = null;
 
@@ -99,14 +105,18 @@ public class ShopDisplay : DisplayBase
 		if(IsOpen)
 		{
 			_highlightedElement = element;
-			_itemDisplayContainer.gameObject.SetActive(true);
-			_titleLabel.text = element.Config.ItemName;
-			_icon.sprite = element.Config.Icon;
-			_typeLabel.text = element.Config.SetType.ToString();
-			_descriptionLabel.text = element.Config.Description;
-			_costLabel.text = $"Cost: {element.PriceLabel.text}";
-			_stockLabel.text = $"Stock: {element.StockLabel.text}";
-			_buyButton.interactable = element.CanBuy;
+			_itemDisplayContainer.gameObject.SetActive(_highlightedElement != null);
+			if(_highlightedElement != null)
+			{
+				_highlightedElement.RefreshItem();
+				_titleLabel.text = element.Config.ItemName;
+				_icon.sprite = element.Config.Icon;
+				_typeLabel.text = element.Config.SetType.ToString();
+				_descriptionLabel.text = element.Config.Description;
+				_costLabel.text = $"Cost: {element.PriceLabel.text}";
+				_stockLabel.text = $"Stock: {element.StockLabel.text}";
+				_buyButton.interactable = element.CanBuy;
+			}
 		}
 	}
 }

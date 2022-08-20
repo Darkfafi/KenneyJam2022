@@ -18,12 +18,17 @@ public class StatValue
 
 	public StatValue(float value)
 	{
-		MaxValue = Value = value;
+		SetMaxValue(value);
 	}
 
 	public void Refresh()
 	{
 		SetValue(MaxValue);
+	}
+
+	public void SetMaxValue(float maxValue)
+	{
+		Value = MaxValue = Mathf.Max(0f, maxValue);
 	}
 
 	public void SetValue(float value)

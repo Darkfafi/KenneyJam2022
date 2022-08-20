@@ -623,6 +623,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startWalkPosition: {fileID: 1571854114}
+  _staminaConfig: {fileID: 11400000, guid: 11c82e94e30cb5f45a5095677d9d06c2, type: 2}
+  _staminaScaler: {fileID: 11400000, guid: 3fa00f96c1e412a41b337e64f63fa696, type: 2}
 --- !u!1 &496479814
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,7 +670,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfdd627f7c9418942b2be1edf9fcf841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startStamina: 5
   _worldNavigationSystem: {fileID: 681655111}
   _player: {fileID: 2018366649}
   _states:

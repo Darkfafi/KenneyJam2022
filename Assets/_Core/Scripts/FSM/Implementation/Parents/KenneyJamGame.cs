@@ -7,10 +7,6 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 {
 	#region Editor Variables
 
-	[Header("Configs")]
-	[SerializeField]
-	private int _startStamina = 10;
-
 	[Header("Game")]
 	[SerializeField]
 	private WorldNavigationSystem _worldNavigationSystem = null;
@@ -62,12 +58,17 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 
 	#region Lifecycle
 
+	protected void OnValidate()
+	{
+		_states = GetComponentsInChildren<KenneyJamGameStateBase>(false);
+	}
+
 	protected void Awake()
 	{
 		_fsm = new FiniteStateMachine<KenneyJamGame>(this, _states, false);
 
 		Inventory = new Inventory();
-		Stamina = new StatValue(_startStamina);
+		Stamina = new StatValue(0);
 
 		_worldNavigationSystem.Initialize();
 
@@ -91,7 +92,10 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 
 	public void GoToNextPhase()
 	{
-		_fsm.GoToNextState();
+		if(!_fsm.GoToNextState())
+		{
+			_fsm.SetState(0);
+		}
 	}
 
 	#endregion
