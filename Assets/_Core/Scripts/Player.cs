@@ -16,6 +16,12 @@ public class Player : MonoBehaviour
 
 	#endregion
 
+	#region Variables
+
+	private bool _isInitialized = false;
+
+	#endregion
+
 	#region Properties
 
 	public SpriteRenderer SpriteRenderer => _spriteRenderer;
@@ -25,12 +31,35 @@ public class Player : MonoBehaviour
 		get; private set;
 	}
 
+	public StatValue Stamina
+	{
+		get; private set;
+	}
+
 	#endregion
+
+	#region Lifecycle
 
 	protected void Awake()
 	{
 		State = PlayerState.Idle;
 		GetStateComponent(State).Play();
+	}
+
+	#endregion
+
+	#region Public Methods
+
+	public void Initialize(int staminaStartValue)
+	{
+		if(_isInitialized)
+		{
+			return;
+		}
+
+		Stamina = new StatValue(staminaStartValue);
+
+		_isInitialized = true;
 	}
 
 	public void SetState(PlayerState state)
@@ -42,6 +71,8 @@ public class Player : MonoBehaviour
 			GetStateComponent(State).Play();
 		}
 	}
+
+	#endregion
 
 	#region Private Methods
 

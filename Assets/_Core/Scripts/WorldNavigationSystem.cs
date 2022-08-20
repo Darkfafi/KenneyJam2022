@@ -104,8 +104,10 @@ public class WorldNavigationSystem : MonoBehaviour
 	{
 		for(int i = 0; i < _chunks.Count; i++)
 		{
-			Destroy(_chunks[i]);
+			Destroy(_chunks[i].gameObject);
 		}
+
+		_chunks.Clear();
 
 		_loopTween?.Kill();
 		_loopTween = null;

@@ -12,6 +12,11 @@ public class IntroState : KenneyJamGameStateBase
 
 	protected override void OnEnter()
 	{
+		// Refresh Stats
+		StateParent.Player.Stamina.Refresh();
+		StateParent.NavigationSystem.ResetLoop();
+
+		// Animation
 		StateParent.Player.transform.position = _startWalkPosition.position;
 		StateParent.Player.SpriteRenderer.color = new Color(1f, 1f, 1f, 0f);
 

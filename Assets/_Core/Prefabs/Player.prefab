@@ -116,7 +116,7 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        _duration: 0.4
+        _duration: 0.25
         _useCurveEasingDuration: 0
         _useCurveEasing: 0
         _modifierType: 2

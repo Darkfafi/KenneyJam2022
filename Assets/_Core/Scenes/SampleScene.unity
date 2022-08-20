@@ -636,12 +636,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfdd627f7c9418942b2be1edf9fcf841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startStamina: 5
   _worldNavigationSystem: {fileID: 681655111}
   _player: {fileID: 2018366649}
   _states:
   - {fileID: 358112520}
   - {fileID: 1538335339}
   _distanceLabel: {fileID: 326124278}
+  _staminaFillBar: {fileID: 1722980663}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1577,7 +1579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b9dd1f82666f342804f2c47f6c83cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+  _speed: 4
   _chunksContainer: {fileID: 105435035}
   _chunkWidth: 14
   _startChunkPrefab: {fileID: 3086194751930385108, guid: d4ea3204e66f7014db7ae531b3726062, type: 3}
@@ -2231,7 +2233,7 @@ GameObject:
   - component: {fileID: 1722980664}
   - component: {fileID: 1722980663}
   m_Layer: 5
-  m_Name: Fill
+  m_Name: StaminaFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
