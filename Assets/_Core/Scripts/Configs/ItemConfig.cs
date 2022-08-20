@@ -21,7 +21,7 @@ public class ItemConfig : ScriptableObject
 	[SerializeField]
 	private ItemType _type = ItemType.Consumable;
 
-	public string Name => _name;
+	public string ItemName => _name;
 	public string Description => _description;
 	public Sprite Icon => _icon;
 	public ItemType SetType => _type;

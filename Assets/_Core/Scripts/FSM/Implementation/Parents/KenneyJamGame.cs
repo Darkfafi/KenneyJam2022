@@ -96,16 +96,3 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 
 	#endregion
 }
-
-public class BuyState : KenneyJamGameStateBase
-{
-	protected override void OnEnter()
-	{
-
-	}
-
-	protected override void OnExit()
-	{
-
-	}
-}

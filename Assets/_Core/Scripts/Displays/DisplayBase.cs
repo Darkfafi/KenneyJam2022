@@ -1,7 +1,7 @@
 using RaTweening;
 using UnityEngine;
 
-public abstract class DisplayBase : MonoBehaviour
+public class DisplayBase : MonoBehaviour
 {
 	[SerializeField]
 	private RaTweenerComponent _openAnimation = null;
@@ -33,6 +33,8 @@ public abstract class DisplayBase : MonoBehaviour
 
 		RaTweenBase.CompleteGroup(this);
 
+		OnOpen();
+
 		_content.gameObject.SetActive(true);
 		_openAnimation.Play().OnComplete(() => OnOpened()).SetGroup(this);
 	}
@@ -47,6 +49,8 @@ public abstract class DisplayBase : MonoBehaviour
 		IsOpen = false;
 
 		RaTweenBase.CompleteGroup(this);
+
+		OnClose();
 
 		if(instant)
 		{
@@ -64,7 +68,21 @@ public abstract class DisplayBase : MonoBehaviour
 		}
 	}
 
+	protected virtual void OnOpen()
+	{
+	}
 
-	protected abstract void OnOpened();
-	protected abstract void OnClosed();
+	protected virtual void OnOpened()
+	{
+	
+	}
+
+	protected virtual void OnClose()
+	{
+	}
+
+	protected virtual void OnClosed()
+	{
+
+	}
 }
