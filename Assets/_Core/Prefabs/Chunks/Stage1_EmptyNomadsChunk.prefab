@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6928271626026246255}
   - component: {fileID: 3413659451329291016}
   m_Layer: 0
-  m_Name: StageOne_EmptyNomadsChunk
+  m_Name: Stage1_EmptyNomadsChunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

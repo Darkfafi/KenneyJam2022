@@ -17,8 +17,16 @@ public class IntroState : KenneyJamGameStateBase
 
 	#endregion
 
+	public override void Initialize(KenneyJamGame parent)
+	{
+		base.Initialize(parent);
+		parent.DisableMapBar();
+	}
+
 	protected override void OnEnter()
 	{
+		StateParent.DisableMapBar();
+
 		// Apply Stats
 		StateParent.RefreshItemsBar();
 		StateParent.Stamina.SetMaxValue(_staminaScaler.GetValue(StateParent.Inventory.GetItemCount(_staminaConfig)));
@@ -40,6 +48,7 @@ public class IntroState : KenneyJamGameStateBase
 				.OnStart(()=>StateParent.Player.SetState( Character.PlayerState.Walking))
 				.OnComplete(() => StateParent.Player.SetState(Character.PlayerState.Idle))
 				.ToSequenceEntry(),
+			RaTweenSequence.EntryData.Create(() => StateParent.EnableMapBar()),
 			StateParent.Player.transform.TweenPunchPos(Vector3.up * 0.3f, 0.5f, vibrato: 3, elasticity: 0f)
 				.SetDelay(0.3f)
 				.ToSequenceEntry()

@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class WorldNavigationSystem : MonoBehaviour
 {
+	#region Consts
+
+	public const int ChunkSize = 14;
+
+	#endregion
+
 	#region Editor Variables
 
 	[Header("Movement Settings")]
@@ -13,9 +19,6 @@ public class WorldNavigationSystem : MonoBehaviour
 	[Header("Chunk Settings")]
 	[SerializeField]
 	private Transform _chunksContainer = null;
-
-	[SerializeField]
-	private int _chunkWidth = 14;
 
 	[SerializeField]
 	private WorldChunk _startChunkPrefab = null;
@@ -77,7 +80,7 @@ public class WorldNavigationSystem : MonoBehaviour
 
 		// Stabalize Variables
 		_speed = Mathf.Max(1f, _speed);
-		_duration = (_chunkWidth / _speed);
+		_duration = (ChunkSize / _speed);
 
 		// Completed
 		_initialized = true;
@@ -92,7 +95,7 @@ public class WorldNavigationSystem : MonoBehaviour
 		else
 		{
 			_loopTween = _chunksContainer
-				.TweenMoveX(-_chunkWidth, _duration)
+				.TweenMoveX(-ChunkSize, _duration)
 				.SetLocalPosition()
 				.SetEndIsDelta()
 				.SetDynamicSetupStep(RaTweenDynamicSetupStep.Start)
@@ -145,7 +148,7 @@ public class WorldNavigationSystem : MonoBehaviour
 		WorldChunk prefab = _chunkIndex == 0 ? _startChunkPrefab : GetChunk();
 
 		WorldChunk chunk = Instantiate(prefab, _chunksContainer);
-		chunk.transform.localPosition = new Vector3(_chunkWidth * _chunkIndex, 0f, 0f);
+		chunk.transform.localPosition = new Vector3(ChunkSize * _chunkIndex, 0f, 0f);
 		chunk.name = chunk.name + "[" + _chunkIndex + "]";
 		_chunkIndex++;
 
@@ -164,21 +167,17 @@ public class WorldNavigationSystem : MonoBehaviour
 
 	private WorldChunk GetChunk()
 	{
-		ChunkData data = null;
+		List<ChunkData> availableChunks = new List<ChunkData>();
 		for(int i = 0; i < _chunkData.Length; i++)
 		{
 			ChunkData currentData = _chunkData[i];
 			if(_chunkIndex >= currentData.ChunkRange.x && _chunkIndex <= currentData.ChunkRange.y)
 			{
-				data = currentData;
-				break;
-			}
-			else if(data == null || data.ChunkRange.y < currentData.ChunkRange.y)
-			{
-				data = currentData;
+				availableChunks.Add(currentData);
 			}
 		}
 
+		ChunkData data = availableChunks[Random.Range(0, availableChunks.Count)];
 		return data.Chunks[Random.Range(0, data.Chunks.Length)];
 	}
 

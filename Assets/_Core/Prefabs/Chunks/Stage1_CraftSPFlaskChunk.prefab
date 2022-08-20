@@ -655,7 +655,7 @@ GameObject:
   - component: {fileID: 6928271626026246255}
   - component: {fileID: 3761502582771255720}
   m_Layer: 0
-  m_Name: StageOne_CraftSPFlaskChunk
+  m_Name: Stage1_CraftSPFlaskChunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

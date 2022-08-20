@@ -16,6 +16,9 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 	private ConsumablesSystem _consumablesSystem = null;
 
 	[SerializeField]
+	private int _goalChunks = 30;
+
+	[SerializeField]
 	private Character _player = null;
 
 	[SerializeField]
@@ -35,6 +38,13 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 	private RectTransform _itemsContainer = null;
 	[SerializeField]
 	private ItemElement _itemElementPrefab = null;
+
+
+	[Header("UI Map")]
+	[SerializeField]
+	private RectTransform _mapContainer = null;
+	[SerializeField]
+	private Slider _mapSlider = null;
 
 	#endregion
 
@@ -104,6 +114,15 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 	{
 		_distanceLabel.text = _worldNavigationSystem.DistanceTravelled.ToString("0") + "m";
 		_staminaFillBar.transform.localScale = new Vector3(Stamina.NormalizedValue, 1f, 1f);
+
+		float goalDistance = WorldNavigationSystem.ChunkSize * _goalChunks;
+		float progress = Mathf.Clamp01(_worldNavigationSystem.DistanceTravelled / goalDistance);
+		_mapSlider.value = progress;
+
+		if(Mathf.Approximately(progress, 1f))
+		{
+			Debug.Log("Win");
+		}
 	}
 
 	#endregion
@@ -139,6 +158,17 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 		{
 			_itemsContainer.gameObject.SetActive(_itemElements.Count > 0);
 		}
+	}
+
+	public void EnableMapBar()
+	{
+		_mapContainer.pivot = new Vector2(_bottomBarContainer.pivot.x, 0f);
+		_mapContainer.gameObject.SetActive(true);
+	}
+
+	public void DisableMapBar()
+	{
+		_mapContainer.gameObject.SetActive(false);
 	}
 
 	public void EnableItemsBar()
