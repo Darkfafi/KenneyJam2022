@@ -11,6 +11,9 @@ public class CursorUtil : ScriptableObject
 	[SerializeField]
 	private Texture2D _attackCursor = null;
 
+	[SerializeField]
+	private Texture2D _interactCursor = null;
+
 	public void SetCursor(CursorType type)
 	{
 		Cursor.SetCursor(GetCursorTexture(type), Vector2.zero, CursorMode.Auto);
@@ -24,6 +27,8 @@ public class CursorUtil : ScriptableObject
 				return _defaultCursor;
 			case CursorType.Attack:
 				return _attackCursor;
+			case CursorType.Interact:
+				return _interactCursor;
 		}
 		return null;
 	}
@@ -31,6 +36,7 @@ public class CursorUtil : ScriptableObject
 	public enum CursorType
 	{
 		Default,
-		Attack
+		Attack,
+		Interact,
 	}
 }

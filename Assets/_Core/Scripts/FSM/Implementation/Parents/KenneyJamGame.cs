@@ -42,6 +42,7 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 
 	private FiniteStateMachine<KenneyJamGame> _fsm = null;
 	private List<ItemElement> _itemElements = new List<ItemElement>();
+	private bool _itemBarEnabled = false;
 
 	#endregion
 
@@ -133,16 +134,23 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 			itemElement.Initialize(item, this);
 			_itemElements.Add(itemElement);
 		}
+
+		if(_itemBarEnabled)
+		{
+			_itemsContainer.gameObject.SetActive(_itemElements.Count > 0);
+		}
 	}
 
 	public void EnableItemsBar()
 	{
+		_itemBarEnabled = true;
 		_itemsContainer.pivot = new Vector2(1f, _itemsContainer.pivot.y);
 		_itemsContainer.gameObject.SetActive(_itemElements.Count > 0);
 	}
 
 	public void DisableItemsBar()
 	{
+		_itemBarEnabled = false;
 		_itemsContainer.gameObject.SetActive(false);
 	}
 

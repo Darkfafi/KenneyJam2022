@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldInteractionSystem : MonoBehaviour
@@ -8,6 +6,11 @@ public class WorldInteractionSystem : MonoBehaviour
 	private CursorUtil _cursorUtil = null;
 
 	public KenneyJamGame Game
+	{
+		get; private set;
+	}
+
+	public bool IsEnabled
 	{
 		get; private set;
 	}
@@ -21,10 +24,21 @@ public class WorldInteractionSystem : MonoBehaviour
 
 		Game = game;
 		_cursorUtil.SetCursor(CursorUtil.CursorType.Default);
+		IsEnabled = true;
+	}
+
+	public void SetEnabled(bool enabled)
+	{
+		IsEnabled = enabled;
 	}
 
 	protected void Update()
 	{
+		if(!IsEnabled)
+		{
+			return;
+		}
+
 		RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
 		if(hit.collider != null && hit.collider.transform.GetComponentInChildren<IInteractable>() is IInteractable interactable)
@@ -33,6 +47,9 @@ public class WorldInteractionSystem : MonoBehaviour
 			{
 				case InteractableType.Attack:
 					_cursorUtil.SetCursor(CursorUtil.CursorType.Attack);
+					break;
+				case InteractableType.Interactable:
+					_cursorUtil.SetCursor(CursorUtil.CursorType.Interact);
 					break;
 				case InteractableType.None:
 					_cursorUtil.SetCursor(CursorUtil.CursorType.Default);

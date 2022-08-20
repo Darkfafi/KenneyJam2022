@@ -10,6 +10,11 @@ public class ConsumablesSystem : MonoBehaviour
 		get; private set;
 	}
 
+	public bool IsEnabled
+	{
+		get; private set;
+	}
+
 	public void Initialize(KenneyJamGame game)
 	{
 		if(Game != null)
@@ -18,12 +23,17 @@ public class ConsumablesSystem : MonoBehaviour
 		}
 
 		Game = game;
+		IsEnabled = true;
 	}
 
+	public void SetEnabled(bool enabled)
+	{
+		IsEnabled = enabled;
+	}
 
 	public bool TryUseItem(ItemConfig item)
 	{
-		if(Game == null)
+		if(Game == null || !IsEnabled)
 		{
 			return false;
 		}

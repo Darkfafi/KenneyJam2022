@@ -12,6 +12,9 @@ public class GameplayState : KenneyJamGameStateBase
 
 		parent.DisableBottomBar();
 		parent.DisableItemsBar();
+
+		parent.ConsumablesSystem.SetEnabled(false);
+		parent.InteractionSystem.SetEnabled(false);
 	}
 
 	protected void Update()
@@ -36,11 +39,18 @@ public class GameplayState : KenneyJamGameStateBase
 
 		StateParent.EnableBottomBar();
 		StateParent.EnableItemsBar();
+
+		StateParent.ConsumablesSystem.SetEnabled(true);
+		StateParent.InteractionSystem.SetEnabled(true);
 	}
 
 	protected override void OnExit()
 	{
+		StateParent.ConsumablesSystem.SetEnabled(false);
+		StateParent.InteractionSystem.SetEnabled(false);
+
 		StateParent.NavigationSystem.PauseLoop();
+
 		StateParent.Player.SetState(Character.PlayerState.Idle);
 		StateParent.Player.Collider2D.enabled = true;
 
@@ -56,7 +66,11 @@ public class GameplayState : KenneyJamGameStateBase
 
 	private IEnumerator DoEndRoutine()
 	{
+		StateParent.ConsumablesSystem.SetEnabled(false);
+		StateParent.InteractionSystem.SetEnabled(false);
+
 		StateParent.NavigationSystem.PauseLoop();
+
 		StateParent.Player.SetState(Character.PlayerState.Death);
 		StateParent.Player.Collider2D.enabled = false;
 

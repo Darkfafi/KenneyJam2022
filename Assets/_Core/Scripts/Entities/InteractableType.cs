@@ -1,5 +1,6 @@
 ﻿public enum InteractableType
 {
 	None,
-	Attack
+	Interactable,
+	Attack,
 }
