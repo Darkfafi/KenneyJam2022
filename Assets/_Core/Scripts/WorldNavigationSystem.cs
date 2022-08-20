@@ -1,7 +1,6 @@
-using System.Collections;
+using RaTweening;
 using System.Collections.Generic;
 using UnityEngine;
-using RaTweening;
 
 public class WorldNavigationSystem : MonoBehaviour
 {
@@ -22,7 +21,7 @@ public class WorldNavigationSystem : MonoBehaviour
 	private WorldChunk _startChunkPrefab = null;
 
 	[SerializeField]
-	private WorldChunk _chunkPrefab = null;
+	private ChunkData[] _chunkData = null;
 
 	#endregion
 
@@ -143,7 +142,7 @@ public class WorldNavigationSystem : MonoBehaviour
 
 	private void CreateChunk()
 	{
-		WorldChunk prefab = _chunkIndex == 0 ? _startChunkPrefab : _chunkPrefab;
+		WorldChunk prefab = _chunkIndex == 0 ? _startChunkPrefab : GetChunk();
 
 		WorldChunk chunk = Instantiate(prefab, _chunksContainer);
 		chunk.transform.localPosition = new Vector3(_chunkWidth * _chunkIndex, 0f, 0f);
@@ -161,6 +160,37 @@ public class WorldNavigationSystem : MonoBehaviour
 			_chunks.RemoveAt(0);
 			Destroy(tail.gameObject);
 		}
+	}
+
+	private WorldChunk GetChunk()
+	{
+		ChunkData data = null;
+		for(int i = 0; i < _chunkData.Length; i++)
+		{
+			ChunkData currentData = _chunkData[i];
+			if(_chunkIndex >= currentData.ChunkRange.x && _chunkIndex <= currentData.ChunkRange.y)
+			{
+				data = currentData;
+				break;
+			}
+			else if(data == null || data.ChunkRange.y < currentData.ChunkRange.y)
+			{
+				data = currentData;
+			}
+		}
+
+		return data.Chunks[Random.Range(0, data.Chunks.Length)];
+	}
+
+	#endregion
+
+	#region Nested
+
+	[System.Serializable]
+	private class ChunkData
+	{
+		public Vector2Int ChunkRange;
+		public WorldChunk[] Chunks;
 	}
 
 	#endregion

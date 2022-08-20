@@ -39,6 +39,8 @@ public class RewardDisplay : DisplayBase
 		Clear();
 
 		_oldXP = oldXP;
+		_newXP = _oldXP;
+
 		_onClosed = onClosed;
 
 		_xpTarget.SetNumberValue(oldXP);

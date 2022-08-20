@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 026ff814a42ff0943b1009941922fad9, type: 3}
   m_Name: StaminaScalerConfig
   m_EditorClassIdentifier: 
-  _startValue: 5
-  _valuePerStep: 10
+  _startValue: 8
+  _valuePerStep: 6

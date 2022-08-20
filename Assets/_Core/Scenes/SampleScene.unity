@@ -1989,7 +1989,15 @@ MonoBehaviour:
   _chunksContainer: {fileID: 105435035}
   _chunkWidth: 14
   _startChunkPrefab: {fileID: 5667113178817191838, guid: d4ea3204e66f7014db7ae531b3726062, type: 3}
-  _chunkPrefab: {fileID: 3761502582771255720, guid: 9daff210b52f30c43b209fdac09f223f, type: 3}
+  _chunkData:
+  - ChunkRange: {x: 0, y: 16}
+    Chunks:
+    - {fileID: 3413659451329291016, guid: d150df632035a414fb7175ccaae56521, type: 3}
+    - {fileID: 3761502582771255720, guid: 9daff210b52f30c43b209fdac09f223f, type: 3}
+    - {fileID: 3413659451329291016, guid: 5fd8b8aceab2cb2498c75d16588f72c9, type: 3}
+  - ChunkRange: {x: 5, y: 15}
+    Chunks:
+    - {fileID: 3761502582771255720, guid: 9fa89468f3c28a14e9670dfc76d183c0, type: 3}
 --- !u!1 &712081408
 GameObject:
   m_ObjectHideFlags: 0
