@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class RewardDisplay : DisplayBase
 {
 	[SerializeField]
-	private LabelValueDisplay _xpGainerPrefab = null;
+	private LabelValueElement _xpGainerPrefab = null;
 
 	[SerializeField]
-	private LabelValueDisplay _xpTarget = null;
+	private LabelValueElement _xpTarget = null;
 
 	[SerializeField]
 	private Text _buttonLabel = null;
@@ -26,7 +26,7 @@ public class RewardDisplay : DisplayBase
 	private Action _onClosed = null;
 	private Coroutine _countdownRoutine = null;
 
-	private Dictionary<XPGainer, LabelValueDisplay> _xpGainerDisplays = new Dictionary<XPGainer, LabelValueDisplay>();
+	private Dictionary<XPGainer, LabelValueElement> _xpGainerDisplays = new Dictionary<XPGainer, LabelValueElement>();
 
 	protected override void Awake()
 	{
@@ -46,7 +46,7 @@ public class RewardDisplay : DisplayBase
 		for(int i = 0; i < xpGainers.Length; i++)
 		{
 			XPGainer gainer = xpGainers[i];
-			LabelValueDisplay display = Instantiate(_xpGainerPrefab, _xpGainerPrefab.transform.parent);
+			LabelValueElement display = Instantiate(_xpGainerPrefab, _xpGainerPrefab.transform.parent);
 			display.gameObject.SetActive(true);
 			display.Label.text = gainer.Label;
 			display.SetNumberValue(gainer.Value);

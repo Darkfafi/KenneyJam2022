@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class LabelValueDisplay : MonoBehaviour
+public class LabelValueElement : MonoBehaviour
 {
 	[SerializeField]
 	private Text _label = null;
