@@ -26,7 +26,11 @@ public class RewardState : KenneyJamGameStateBase
 		// Apply XP Gain
 		StateParent.Inventory.AddXP(distanceXPGainer.XPDelta);
 
-		_display.Init(oldXP, new XPGainer[] { distanceXPGainer }, () => StateParent.GoToNextPhase());
+		// Record
+		StateParent.RecordXPGained(distanceXPGainer.XPDelta);
+		StateParent.RecordDistanceTravelled(distance);
+
+		_display.Init(oldXP, new XPGainer[] { distanceXPGainer }, () => StateParent.GoToNextPhase(false));
 		_display.Open();
 	}
 

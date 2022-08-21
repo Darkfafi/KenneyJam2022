@@ -13,7 +13,7 @@ public class Inventory
 	public int XP
 	{
 		get; private set;
-	} = 10000;
+	}
 
 	// XP
 	public void AddXP(int amount)

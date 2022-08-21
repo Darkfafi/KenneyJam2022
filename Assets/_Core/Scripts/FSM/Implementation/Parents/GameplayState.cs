@@ -1,9 +1,16 @@
 ﻿using UnityEngine;
 using RaTweening;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameplayState : KenneyJamGameStateBase
 {
+	[SerializeField]
+	private int _goalChunks = 40;
+
+	[SerializeField]
+	private Slider _mapSlider = null;
+
 	[Header("Audio")]
 	[SerializeField]
 	private MusicSystem _musicSystem = null;
@@ -32,9 +39,17 @@ public class GameplayState : KenneyJamGameStateBase
 		{
 			StateParent.Stamina.ApplyDelta(-Time.deltaTime);
 
-			if(StateParent.Stamina.IsEmpty)
+			float goalDistance = WorldNavigationSystem.ChunkSize * _goalChunks;
+			float progress = Mathf.Clamp01(StateParent.NavigationSystem.DistanceTravelled / goalDistance);
+			_mapSlider.value = progress;
+
+			if(Mathf.Approximately(progress, 1f))
 			{
-				_endRoutine = StartCoroutine(DoEndRoutine());
+				_endRoutine = StartCoroutine(DoEndRoutine(true));
+			}
+			else if(StateParent.Stamina.IsEmpty)
+			{
+				_endRoutine = StartCoroutine(DoEndRoutine(false));
 			}
 		}
 	}
@@ -75,7 +90,7 @@ public class GameplayState : KenneyJamGameStateBase
 		StateParent.DisableItemsBar();
 	}
 
-	private IEnumerator DoEndRoutine()
+	private IEnumerator DoEndRoutine(bool win)
 	{
 		_musicSystem.StopSystem();
 		_musicSystem.MusicSource.PlayOneShot(_outroClip);
@@ -85,11 +100,19 @@ public class GameplayState : KenneyJamGameStateBase
 
 		StateParent.NavigationSystem.PauseLoop();
 
-		StateParent.Player.SetState(Character.PlayerState.Death);
+		if(win)
+		{
+			StateParent.Player.SetState(Character.PlayerState.Idle);
+		}
+		else
+		{
+			StateParent.Player.SetState(Character.PlayerState.Death);
+		}
 		StateParent.Player.Collider2D.enabled = false;
 
 		yield return new WaitForSeconds(2.5f);
 		_endRoutine = null;
-		StateParent.GoToNextPhase();
+
+		StateParent.GoToNextPhase(win);
 	}
 }

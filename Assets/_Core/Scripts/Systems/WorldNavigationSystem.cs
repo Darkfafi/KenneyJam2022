@@ -103,7 +103,7 @@ public class WorldNavigationSystem : MonoBehaviour
 				.OnSetup(()=> CreateChunk())
 				.OnUpdate(() => 
 				{ 
-					DistanceTravelled += Time.deltaTime * _duration;
+					DistanceTravelled += Time.deltaTime * _speed;
 				})
 				.OnLoop((loopCount) => CreateChunk());
 		}

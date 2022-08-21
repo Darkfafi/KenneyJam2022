@@ -17,13 +17,16 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 	private ConsumablesSystem _consumablesSystem = null;
 
 	[SerializeField]
-	private int _goalChunks = 30;
-
-	[SerializeField]
 	private Character _player = null;
 
 	[SerializeField]
 	private KenneyJamGameStateBase[] _states = null;
+
+	[SerializeField]
+	private int _loopIndex = 0;
+
+	[SerializeField]
+	private WinState _winState = null;
 
 	[Header("UI Bottom Bar")]
 	[SerializeField]
@@ -81,6 +84,16 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 		get; private set;
 	}
 
+	public int TotalDistanceTravelled
+	{
+		get; private set;
+	}
+
+	public int TotalXPGained
+	{
+		get; private set;
+	}
+
 	#endregion
 
 	#region Lifecycle
@@ -115,26 +128,35 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 	{
 		_distanceLabel.text = _worldNavigationSystem.DistanceTravelled.ToString("0") + "m";
 		_staminaFillBar.transform.localScale = new Vector3(Stamina.NormalizedValue, 1f, 1f);
-
-		float goalDistance = WorldNavigationSystem.ChunkSize * _goalChunks;
-		float progress = Mathf.Clamp01(_worldNavigationSystem.DistanceTravelled / goalDistance);
-		_mapSlider.value = progress;
-
-		if(Mathf.Approximately(progress, 1f))
-		{
-			Debug.Log("Win");
-		}
 	}
 
 	#endregion
 
 	#region Public Methods
 
-	public void GoToNextPhase()
+	public void RecordDistanceTravelled(int amount)
 	{
-		if(!_fsm.GoToNextState())
+		TotalDistanceTravelled += amount;
+	}
+
+	public void RecordXPGained(int amount)
+	{
+		TotalXPGained += amount;
+	}
+
+	public void GoToNextPhase(bool win)
+	{
+		if(win)
+		{
+			_fsm.SetState(_winState);
+		}
+		else if(_fsm.CurrentStateIndex >= _loopIndex)
 		{
 			_fsm.SetState(0);
+		}
+		else
+		{
+			_fsm.GoToNextState();
 		}
 	}
 
@@ -163,6 +185,7 @@ public class KenneyJamGame : MonoBehaviour, IStatesParent
 
 	public void EnableMapBar()
 	{
+		_mapSlider.value = 0;
 		_mapContainer.pivot = new Vector2(_bottomBarContainer.pivot.x, 0f);
 		_mapContainer.gameObject.SetActive(true);
 	}

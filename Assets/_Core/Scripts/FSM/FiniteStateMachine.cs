@@ -11,6 +11,8 @@ public class FiniteStateMachine<TStatesParent> : IDisposable
 		get; private set;
 	}
 
+	public int CurrentStateIndex => CurrentState == null ? -1 : Array.IndexOf(States, CurrentState);
+
 	public bool IsRunning => CurrentState != null;
 
 	public FiniteStateMachine(TStatesParent parent, IState<TStatesParent>[] states, bool startStateMachine = true)

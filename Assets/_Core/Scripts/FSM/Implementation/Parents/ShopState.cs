@@ -7,7 +7,7 @@ public class ShopState : KenneyJamGameStateBase
 
 	protected override void OnEnter()
 	{
-		_display.Init(StateParent, () => StateParent.GoToNextPhase());
+		_display.Init(StateParent, () => StateParent.GoToNextPhase(false));
 		_display.Open();
 	}
 
