@@ -20,6 +20,8 @@ public class ShopDisplay : DisplayBase
 	[SerializeField]
 	private Image _icon = null;
 	[SerializeField]
+	private Image _extraInfoIcon = null;
+	[SerializeField]
 	private Text _typeLabel;
 	[SerializeField]
 	private Text _descriptionLabel;
@@ -111,6 +113,10 @@ public class ShopDisplay : DisplayBase
 				_highlightedElement.RefreshItem();
 				_titleLabel.text = element.Config.ItemName;
 				_icon.sprite = element.Config.Icon;
+
+				_extraInfoIcon.gameObject.SetActive(element.Config.ExtraInfoIcon != null);
+				_extraInfoIcon.sprite = element.Config.ExtraInfoIcon;
+				
 				_typeLabel.text = element.Config.SpecifiedType.ToString();
 				_descriptionLabel.text = element.Config.Description;
 				_costLabel.text = $"Cost: {element.PriceLabel.text}";

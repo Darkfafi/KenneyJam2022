@@ -8,6 +8,9 @@ public class ConsumablesSystem : MonoBehaviour
 	[SerializeField]
 	private ItemConfig _spFlaskBigConfig = null;
 
+	[SerializeField]
+	private ItemConfig _spCraftFlaskConfig = null;
+
 	public KenneyJamGame Game
 	{
 		get; private set;
@@ -41,14 +44,14 @@ public class ConsumablesSystem : MonoBehaviour
 			return false;
 		}
 
-		if(Game.Inventory.DrainItem(item))
+		if(Game.Inventory.CanDrainItem(item))
 		{
 			if(item == _spFlashConfig)
 			{
-				// Costs 5
+				// Costs 6
 				// 10 seconds of walking added
-				// 10 * 1.5 = 15 xp worth of stamina, so + 11 xp
-				// (or 15 xp worth of stamina on craft)
+				// 10 * 1.5 = 15 xp worth of stamina, so + 9 xp
+				// (or 11 xp worth of stamina on craft)
 				Game.Stamina.ApplyDelta(10);
 			}
 			else if(item == _spFlaskBigConfig)
@@ -58,12 +61,17 @@ public class ConsumablesSystem : MonoBehaviour
 				// 30 * 1.5 = 45 xp worth of stamina, so + 15 xp on use
 				Game.Stamina.ApplyDelta(_spFlaskBigConfig.GetCost(0) * 3f);
 			}
+			else if(item == _spCraftFlaskConfig)
+			{
+				// Can only be used for interactions
+				return false;
+			}
 			else
 			{
 				throw new System.NotImplementedException($"Item {item} not implemented");
 			}
-
-			return true;
+			
+			return Game.Inventory.DrainItem(item);
 		}
 
 		return false;

@@ -13,6 +13,9 @@ public class ItemConfig : ScriptableObject
 	private Sprite _icon = null;
 
 	[SerializeField]
+	private Sprite _extraInfoIcon = null;
+
+	[SerializeField]
 	private int[] _costs = new int[] { 1 };
 
 	[SerializeField]
@@ -24,6 +27,7 @@ public class ItemConfig : ScriptableObject
 	public string ItemName => _name;
 	public string Description => _description;
 	public Sprite Icon => _icon;
+	public Sprite ExtraInfoIcon => _extraInfoIcon;
 	public ItemType SpecifiedType => _type;
 	public int MaxStockAmount => _maxStockAmount;
 

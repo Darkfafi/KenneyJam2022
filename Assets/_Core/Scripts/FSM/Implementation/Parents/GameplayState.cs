@@ -46,9 +46,6 @@ public class GameplayState : KenneyJamGameStateBase
 
 	protected override void OnExit()
 	{
-		// When Gameplay Ends, remove all Consumable Items
-		StateParent.Inventory.RemoveItems(x => x.SpecifiedType == ItemConfig.ItemType.Item);
-
 		StateParent.ConsumablesSystem.SetEnabled(false);
 		StateParent.InteractionSystem.SetEnabled(false);
 

@@ -15,6 +15,7 @@ MonoBehaviour:
   _name: Sword
   _description: Used to fight enemies by clicking on them
   _icon: {fileID: 21300000, guid: 63ad3a8f89f2bf24eb8779d2d08f1abb, type: 3}
+  _extraInfoIcon: {fileID: 21300000, guid: 9ff65f5288b47f547ad5a29e0c602861, type: 3}
   _costs: 64000000
   _maxStockAmount: 1
   _type: 1

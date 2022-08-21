@@ -15,6 +15,7 @@ MonoBehaviour:
   _name: Stamina
   _description: Increases your Stamina
   _icon: {fileID: 21300000, guid: c6dd9a4cd8344ff4c972b8bfb57a08d7, type: 3}
-  _costs: 1400000028000000500000005a0000006e000000820000008c000000b4000000c8000000fa000000
+  _extraInfoIcon: {fileID: 0}
+  _costs: 140000002d0000005f000000640000007d00000096000000a5000000c8000000dc000000ff000000
   _maxStockAmount: 10
   _type: 1
