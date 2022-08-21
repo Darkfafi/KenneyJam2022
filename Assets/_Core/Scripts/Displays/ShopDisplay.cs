@@ -19,6 +19,11 @@ public class ShopDisplay : DisplayBase
 	[SerializeField]
 	private AudioClip _shopMusic = null;
 
+	[SerializeField]
+	private AudioClip _buyClip = null;
+	[SerializeField]
+	private AudioClip _selectClip = null;
+
 	[Header("Item Display")]
 	[SerializeField]
 	private Transform _itemDisplayContainer = null;
@@ -74,6 +79,7 @@ public class ShopDisplay : DisplayBase
 		{
 			_game.Inventory.DrainXP(_highlightedElement.Cost);
 			_game.Inventory.AddItem(_highlightedElement.Config);
+			_musicSystem.SFXSource.PlayOneShot(_buyClip);
 		}
 	}
 
@@ -136,6 +142,8 @@ public class ShopDisplay : DisplayBase
 				_stockLabel.text = $"Stock: {element.StockLabel.text}";
 				_buyButton.interactable = element.CanBuy;
 			}
+
+			_musicSystem.SFXSource.PlayOneShot(_selectClip);
 		}
 	}
 }

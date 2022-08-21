@@ -120,10 +120,7 @@ public class Enemy : MonoBehaviour, IChunkEntity, IInteractable
 		{
 			case InteractableType.Attack:
 				Kill();
-				if(_musicChannel.TryGetMusicSystem(out MusicSystem system))
-				{
-					system.SFXSource.PlayOneShot(_attackClip);
-				}
+				_musicChannel.PlaySFX(_attackClip);
 				break;
 		}
 	}

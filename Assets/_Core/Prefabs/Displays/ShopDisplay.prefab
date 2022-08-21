@@ -2663,6 +2663,8 @@ MonoBehaviour:
   _xpLabel: {fileID: 588573317}
   _musicSystem: {fileID: 0}
   _shopMusic: {fileID: 8300000, guid: 87c846f0fe6afae4ca327e5f37aa8ed5, type: 3}
+  _buyClip: {fileID: 8300000, guid: 310bca25529ca784586ff78a3826d613, type: 3}
+  _selectClip: {fileID: 8300000, guid: 9b236fbe52eabda468fe627b495d2f7c, type: 3}
   _itemDisplayContainer: {fileID: 945096424669393624}
   _titleLabel: {fileID: 425886281872243161}
   _icon: {fileID: 9218698966353750140}

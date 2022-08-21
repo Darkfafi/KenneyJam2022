@@ -11,6 +11,14 @@ public class ConsumablesSystem : MonoBehaviour
 	[SerializeField]
 	private ItemConfig _spCraftFlaskConfig = null;
 
+	[Header("Audio")]
+	[SerializeField]
+	private MusicChannel _musicChannel = null;
+	[SerializeField]
+	private AudioClip _flaskUseClip = null;
+
+
+
 	public KenneyJamGame Game
 	{
 		get; private set;
@@ -53,6 +61,7 @@ public class ConsumablesSystem : MonoBehaviour
 				// 10 * 1.5 = 15 xp worth of stamina, so + 9 xp
 				// (or 11 xp worth of stamina on craft)
 				Game.Stamina.ApplyDelta(10);
+				_musicChannel.PlaySFX(_flaskUseClip);
 			}
 			else if(item == _spFlaskBigConfig)
 			{
@@ -60,6 +69,7 @@ public class ConsumablesSystem : MonoBehaviour
 				// 10 * 3 = 30 (30 seconds of walking added)
 				// 30 * 1.5 = 45 xp worth of stamina, so + 15 xp on use
 				Game.Stamina.ApplyDelta(_spFlaskBigConfig.GetCost(0) * 3f);
+				_musicChannel.PlaySFX(_flaskUseClip);
 			}
 			else if(item == _spCraftFlaskConfig)
 			{

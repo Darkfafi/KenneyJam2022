@@ -711,6 +711,8 @@ MonoBehaviour:
   _spFlashConfig: {fileID: 11400000, guid: fafb23fe24f986c41aa0c71cac06596f, type: 2}
   _spFlaskBigConfig: {fileID: 11400000, guid: 6113b99970a95fa439dc751e3a29eca9, type: 2}
   _spCraftFlaskConfig: {fileID: 11400000, guid: 47e706560f0953d439c9c4241a368355, type: 2}
+  _musicChannel: {fileID: 11400000, guid: 4c37f14c415ccc743b0d11c1d6b396b4, type: 2}
+  _flaskUseClip: {fileID: 8300000, guid: 03e4478db50172a4eb07d2a69757a3e3, type: 3}
 --- !u!1 &190276119
 GameObject:
   m_ObjectHideFlags: 0

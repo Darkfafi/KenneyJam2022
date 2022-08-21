@@ -20,6 +20,14 @@ public class MusicChannel : ScriptableObject
 		_systems.Remove(system);
 	}
 
+	public void PlaySFX(AudioClip clip)
+	{
+		if(TryGetMusicSystem(out MusicSystem system))
+		{
+			system.SFXSource.PlayOneShot(clip);
+		}
+	}
+
 	public bool TryGetMusicSystem(out MusicSystem system)
 	{
 		for(int i = 0; i < _systems.Count; i++)

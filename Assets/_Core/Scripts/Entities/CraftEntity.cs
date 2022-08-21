@@ -14,6 +14,12 @@ public class CraftEntity : MonoBehaviour, IChunkEntity, IInteractable
 	[SerializeField]
 	private GameObject _objectAfterCraft;
 
+	[Header("Audio")]
+	[SerializeField]
+	private MusicChannel _musicChannel = null;
+	[SerializeField]
+	private AudioClip _useClip = null;
+
 	public bool IsConsumed
 	{
 		get; private set;
@@ -71,20 +77,23 @@ public class CraftEntity : MonoBehaviour, IChunkEntity, IInteractable
 				{
 					if(_chunk.Game.Inventory.DrainItem(_requirement))
 					{
-						if(_chunk.Game.Inventory.AddItem(_gain))
-						{
-							SetConsumed(true);
-						}
+						ApplyEffect();
 					}
 				}
 				else
 				{
-					if(_chunk.Game.Inventory.AddItem(_gain))
-					{
-						SetConsumed(true);
-					}
+					ApplyEffect();
 				}
 				break;
+		}
+	}
+
+	private void ApplyEffect()
+	{
+		if(_chunk.Game.Inventory.AddItem(_gain))
+		{
+			SetConsumed(true);
+			_musicChannel.PlaySFX(_useClip);
 		}
 	}
 

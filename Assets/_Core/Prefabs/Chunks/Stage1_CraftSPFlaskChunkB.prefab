@@ -76,6 +76,8 @@ MonoBehaviour:
   _gain: {fileID: 11400000, guid: fafb23fe24f986c41aa0c71cac06596f, type: 2}
   _objectBeforeCraft: {fileID: 5091874886050442585}
   _objectAfterCraft: {fileID: 3109667226769474238}
+  _musicChannel: {fileID: 11400000, guid: 4c37f14c415ccc743b0d11c1d6b396b4, type: 2}
+  _useClip: {fileID: 8300000, guid: c5a55a2f9c0732245aeff7a8bc7d5579, type: 3}
 --- !u!1 &3109667226769474238
 GameObject:
   m_ObjectHideFlags: 0
