@@ -21,6 +21,12 @@ public class RewardDisplay : DisplayBase
 	[SerializeField]
 	private float _convertDuration = 2f;
 
+	[Header("Audio")]
+	[SerializeField]
+	private MusicSystem _musicSystem = null;
+	[SerializeField]
+	private AudioClip _rewardClip = null;
+
 	private int _oldXP = 0;
 	private int _newXP = 0;
 	private Action _onClosed = null;
@@ -110,6 +116,7 @@ public class RewardDisplay : DisplayBase
 
 		float duration = _convertDuration;
 		float counter = 0f;
+		float audioCounter = 0f;
 
 		while(counter < duration)
 		{
@@ -120,6 +127,14 @@ public class RewardDisplay : DisplayBase
 			}
 			_xpTarget.SetNumberValue(Mathf.Lerp(_oldXP, _newXP, normalizedTime));
 			counter = Mathf.Clamp(counter + Time.deltaTime, 0f, duration);
+			
+			audioCounter += Time.deltaTime;
+			if(audioCounter > 0.1f)
+			{
+				audioCounter = 0f;
+				_musicSystem.SFXSource.PlayOneShot(_rewardClip);
+			}
+
 			yield return null;
 		}
 

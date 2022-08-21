@@ -78,7 +78,7 @@ public class GameplayState : KenneyJamGameStateBase
 	private IEnumerator DoEndRoutine()
 	{
 		_musicSystem.StopSystem();
-		_musicSystem.AudioSource.PlayOneShot(_outroClip);
+		_musicSystem.MusicSource.PlayOneShot(_outroClip);
 
 		StateParent.ConsumablesSystem.SetEnabled(false);
 		StateParent.InteractionSystem.SetEnabled(false);

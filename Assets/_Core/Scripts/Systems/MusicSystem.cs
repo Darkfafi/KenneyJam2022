@@ -1,28 +1,48 @@
 using System.Collections;
 using UnityEngine;
+using RaTweening;
 
 public class MusicSystem : MonoBehaviour
 {
     [Header("Audio")]
     [SerializeField]
-    private AudioSource _audioSource = null;
+    private AudioSource _internalSource = null;
+    [SerializeField]
+    private AudioSource _musicSource = null;
+    [SerializeField]
+    private AudioSource _sfxSource = null;
 
     [SerializeField]
     private AudioClip[] _clips = null;
+
+    [SerializeField]
+    private MusicChannel _channel = null;
 
     private Coroutine _systemRoutine = null;
 
     public bool IsRunning => _systemRoutine != null;
 
-    public AudioSource AudioSource => _audioSource;
+    public AudioSource MusicSource => _musicSource;
+    public AudioSource SFXSource => _sfxSource;
 
-    public void StartSystem()
+	protected void Awake()
+	{
+        _channel.Register(this);
+    }
+
+	protected void OnDestroy()
+	{
+        _channel.Unregister(this);
+	}
+
+	public void StartSystem()
     {
         if(IsRunning)
         {
             return;
         }
 
+        _musicSource.TweenVolume(0f, 0.35f);
         _systemRoutine = StartCoroutine(DoSystemRoutine());
     }
 
@@ -35,22 +55,25 @@ public class MusicSystem : MonoBehaviour
 
         StopCoroutine(_systemRoutine);
         _systemRoutine = null;
-        
-        _audioSource.Stop();
-        _audioSource.clip = null;
+
+        _internalSource.Stop();
+        _internalSource.clip = null;
+
+        _musicSource.TweenVolume(default, 0.1f)
+            .SetEndRef(_internalSource);
     }
 
     private IEnumerator DoSystemRoutine()
     {
         int index = 0;
-        _audioSource.loop = false;
+        _internalSource.loop = false;
 
         while(true)
         {
-            _audioSource.clip = _clips[index % _clips.Length];
-            _audioSource.Play();
+            _internalSource.clip = _clips[index % _clips.Length];
+            _internalSource.Play();
             index++;
-            yield return new WaitForSeconds(_audioSource.clip.length);
+            yield return new WaitForSeconds(_internalSource.clip.length);
         }
     }
 }

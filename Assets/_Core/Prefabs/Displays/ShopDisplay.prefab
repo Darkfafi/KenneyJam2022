@@ -2657,6 +2657,8 @@ MonoBehaviour:
   - {fileID: 3507962716709725065}
   - {fileID: 4393786479437904465}
   _xpLabel: {fileID: 588573317}
+  _musicSystem: {fileID: 0}
+  _shopMusic: {fileID: 8300000, guid: 87c846f0fe6afae4ca327e5f37aa8ed5, type: 3}
   _itemDisplayContainer: {fileID: 945096424669393624}
   _titleLabel: {fileID: 4149352602791102420}
   _icon: {fileID: 9218698966353750140}

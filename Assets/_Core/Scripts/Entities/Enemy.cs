@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,12 @@ public class Enemy : MonoBehaviour, IChunkEntity, IInteractable
 
 	[SerializeField]
 	private float _viewRadius = 3f;
+
+	[Header("Audio")]
+	[SerializeField]
+	private MusicChannel _musicChannel = null;
+	[SerializeField]
+	private AudioClip _attackClip = null;
 
 	#endregion
 
@@ -113,6 +120,10 @@ public class Enemy : MonoBehaviour, IChunkEntity, IInteractable
 		{
 			case InteractableType.Attack:
 				Kill();
+				if(_musicChannel.TryGetMusicSystem(out MusicSystem system))
+				{
+					system.SFXSource.PlayOneShot(_attackClip);
+				}
 				break;
 		}
 	}

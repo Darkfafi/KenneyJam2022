@@ -1202,3 +1202,5 @@ MonoBehaviour:
   _buttonLabel: {fileID: 175397475}
   _startDuration: 1
   _convertDuration: 1
+  _musicSystem: {fileID: 0}
+  _rewardClip: {fileID: 8300000, guid: af85f232d05688f448982c17aa3c87af, type: 3}

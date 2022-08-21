@@ -12,6 +12,13 @@ public class ShopDisplay : DisplayBase
 	[SerializeField]
 	private LabelValueElement _xpLabel = null;
 
+	[Header("Audio")]
+	[SerializeField]
+	private MusicSystem _musicSystem = null;
+
+	[SerializeField]
+	private AudioClip _shopMusic = null;
+
 	[Header("Item Display")]
 	[SerializeField]
 	private Transform _itemDisplayContainer = null;
@@ -72,6 +79,9 @@ public class ShopDisplay : DisplayBase
 
 	protected override void OnOpen()
 	{
+		_musicSystem.MusicSource.clip = _shopMusic;
+		_musicSystem.MusicSource.Play();
+
 		_highlightedElement = null;
 		_itemDisplayContainer.gameObject.SetActive(false);
 		for(int i = 0; i < _shopItems.Length; i++)
@@ -88,6 +98,9 @@ public class ShopDisplay : DisplayBase
 
 	protected override void OnClosed()
 	{
+		_musicSystem.MusicSource.Stop();
+		_musicSystem.MusicSource.clip = null;
+
 		for(int i = 0; i < _shopItems.Length; i++)
 		{
 			_shopItems[i].DeInit();

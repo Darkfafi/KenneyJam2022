@@ -114,3 +114,5 @@ MonoBehaviour:
   _speed: 4
   _staminaDrain: 10
   _viewRadius: 4
+  _musicChannel: {fileID: 11400000, guid: 4c37f14c415ccc743b0d11c1d6b396b4, type: 2}
+  _attackClip: {fileID: 8300000, guid: 3c64710f227bcb044bdd4d5c63f5f55b, type: 3}

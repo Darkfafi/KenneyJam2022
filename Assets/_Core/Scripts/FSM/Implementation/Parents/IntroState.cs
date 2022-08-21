@@ -64,7 +64,7 @@ public class IntroState : KenneyJamGameStateBase
 			StateParent.GoToNextPhase();
 		}).OnStart(() => 
 		{
-			_musicSystem.AudioSource.PlayOneShot(_introClip);
+			_musicSystem.MusicSource.PlayOneShot(_introClip);
 		}).SetDelay(0.5f);
 	}
 
