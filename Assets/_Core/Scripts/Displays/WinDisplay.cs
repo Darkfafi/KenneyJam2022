@@ -89,7 +89,7 @@ public class WinDisplay : DisplayBase
 			float normalizedTime = counter / duration;
 
 			_distanceTravelledLabel.text = $"{ Mathf.Lerp(0, _game.TotalDistanceTravelled, normalizedTime).ToString("0") }m";
-			_xpGainedLabel.text = $"{Mathf.Lerp(0, _game.TotalXPGained, normalizedTime) }";
+			_xpGainedLabel.text = $"{Mathf.Lerp(0, _game.TotalXPGained, normalizedTime).ToString("0") }";
 
 			counter = Mathf.Clamp(counter + Time.deltaTime, 0f, duration);
 
