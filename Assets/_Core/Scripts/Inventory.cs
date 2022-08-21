@@ -42,6 +42,19 @@ public class Inventory
 	}
 
 	// Items
+	public void RemoveItems(Predicate<ItemConfig> predicate)
+	{
+		var items = GetItemList(predicate);
+		for(int i = 0; i < items.Length; i++)
+		{
+			var item = items[i];
+			if(_items.ContainsKey(item))
+			{
+				_items[item] = 0;
+			}
+		}
+	}
+
 	public ItemConfig[] GetItemList(Predicate<ItemConfig> predicate)
 	{
 		return _items.Keys.Where((x) => predicate(x)).ToArray();
