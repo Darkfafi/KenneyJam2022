@@ -15,6 +15,13 @@ public class IntroState : KenneyJamGameStateBase
 	[SerializeField]
 	private ScalerConfig _staminaScaler = null;
 
+	[Header("Audio")]
+	[SerializeField]
+	private MusicSystem _musicSystem = null;
+
+	[SerializeField]
+	private AudioClip _introClip = null;
+
 	#endregion
 
 	public override void Initialize(KenneyJamGame parent)
@@ -42,20 +49,23 @@ public class IntroState : KenneyJamGameStateBase
 		RaTweenSequence.Create
 		(
 			StateParent.Player.SpriteRenderer.TweenColorA(1f, 0.5f)
-				.SetDelay(0.5f)
 				.ToSequenceEntry(0.7f),
-			StateParent.Player.transform.TweenMove(StateParent.PlayerStartPosition, 0.8f)
+			StateParent.Player.transform.TweenMove(StateParent.PlayerStartPosition, 0.9f)
 				.OnStart(()=>StateParent.Player.SetState( Character.PlayerState.Walking))
 				.OnComplete(() => StateParent.Player.SetState(Character.PlayerState.Idle))
 				.ToSequenceEntry(),
 			RaTweenSequence.EntryData.Create(() => StateParent.EnableMapBar()),
 			StateParent.Player.transform.TweenPunchPos(Vector3.up * 0.3f, 0.5f, vibrato: 3, elasticity: 0f)
 				.SetDelay(0.3f)
+				.OnStart(()=> _musicSystem.StartSystem())
 				.ToSequenceEntry()
 		).SetGroup(this).OnComplete(() => 
 		{
 			StateParent.GoToNextPhase();
-		});
+		}).OnStart(() => 
+		{
+			_musicSystem.AudioSource.PlayOneShot(_introClip);
+		}).SetDelay(0.5f);
 	}
 
 	protected override void OnExit()

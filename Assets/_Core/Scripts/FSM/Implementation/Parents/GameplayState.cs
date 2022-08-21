@@ -4,6 +4,13 @@ using System.Collections;
 
 public class GameplayState : KenneyJamGameStateBase
 {
+	[Header("Audio")]
+	[SerializeField]
+	private MusicSystem _musicSystem = null;
+
+	[SerializeField]
+	private AudioClip _outroClip = null;
+
 	private Coroutine _endRoutine = null;
 
 	public override void Initialize(KenneyJamGame parent)
@@ -42,10 +49,14 @@ public class GameplayState : KenneyJamGameStateBase
 
 		StateParent.ConsumablesSystem.SetEnabled(true);
 		StateParent.InteractionSystem.SetEnabled(true);
+
+		_musicSystem.StartSystem();
 	}
 
 	protected override void OnExit()
 	{
+		_musicSystem.StopSystem();
+
 		StateParent.ConsumablesSystem.SetEnabled(false);
 		StateParent.InteractionSystem.SetEnabled(false);
 
@@ -66,6 +77,9 @@ public class GameplayState : KenneyJamGameStateBase
 
 	private IEnumerator DoEndRoutine()
 	{
+		_musicSystem.StopSystem();
+		_musicSystem.AudioSource.PlayOneShot(_outroClip);
+
 		StateParent.ConsumablesSystem.SetEnabled(false);
 		StateParent.InteractionSystem.SetEnabled(false);
 
