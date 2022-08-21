@@ -45,13 +45,15 @@ public class ConsumablesSystem : MonoBehaviour
 		{
 			if(item == _spFlashConfig)
 			{
-				// 4 * 3.5 = 14 (14 seconds of walking added)
+				// 4 * 2.5 = 10 (14 seconds of walking added)
+				// Anything above * 3 is a positive loop
+				// Can't have a positive feedback loop because they can be crafted. 
 				Game.Stamina.ApplyDelta(_spFlashConfig.GetCost(0) * 2.5f);
 			}
-			if(item == _spFlaskBigConfig)
+			else if(item == _spFlaskBigConfig)
 			{
-				// 10 * 4 = 40 (40 seconds of walking added)
-				Game.Stamina.ApplyDelta(_spFlaskBigConfig.GetCost(0) * 4f);
+				// 10 * 3 = 30 (30 seconds of walking added)
+				Game.Stamina.ApplyDelta(_spFlaskBigConfig.GetCost(0) * 3f);
 			}
 			else
 			{
@@ -64,5 +66,3 @@ public class ConsumablesSystem : MonoBehaviour
 		return false;
 	}
 }
-
-

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: StaminaScalerConfig
   m_EditorClassIdentifier: 
   _startValue: 8
-  _valuePerStep: 6
+  _valuePerStep: 7

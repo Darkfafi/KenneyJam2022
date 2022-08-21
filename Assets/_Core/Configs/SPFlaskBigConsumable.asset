@@ -15,6 +15,6 @@ MonoBehaviour:
   _name: Big Flask
   _description: Regenerates a large amount of SP
   _icon: {fileID: 21300000, guid: fc7ad23d07448284289679bc61e64612, type: 3}
-  _costs: 04000000
-  _maxStockAmount: 3
+  _costs: 0a000000
+  _maxStockAmount: 1
   _type: 0

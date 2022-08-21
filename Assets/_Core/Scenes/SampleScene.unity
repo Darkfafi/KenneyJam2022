@@ -709,6 +709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spFlashConfig: {fileID: 11400000, guid: fafb23fe24f986c41aa0c71cac06596f, type: 2}
+  _spFlaskBigConfig: {fileID: 11400000, guid: 6113b99970a95fa439dc751e3a29eca9, type: 2}
 --- !u!1 &190276119
 GameObject:
   m_ObjectHideFlags: 0
